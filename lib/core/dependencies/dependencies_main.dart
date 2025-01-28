@@ -40,10 +40,11 @@ void _injectAuth() {
         authRepository: serviceLocator(),
       ),
     )
-    ..registerFactory(() => VerifyUser(
-          authRepository: serviceLocator(),
-        ),)
-        
+    ..registerFactory(
+      () => VerifyUser(
+        authRepository: serviceLocator(),
+      ),
+    )
 
 // Blocs
     ..registerLazySingleton(
@@ -56,46 +57,45 @@ void _injectAuth() {
 }
 
 void _injectHome() {
-// // Data sources
+// Data sources
 
-//   serviceLocator
-//     ..registerFactory<HomeRemoteDataSource>(
-//       () => HomeRemoteDataSourceImpl(
-//         webService: serviceLocator(),
-//       ),
-//     )
+  serviceLocator
+    ..registerFactory<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl(
+        webService: serviceLocator(),
+      ),
+    )
 
-// // Repositories
-//     ..registerFactory<HomeRepository>(
-//       () => HomeRepositoryImpl(
-//         menuLocalDataSource: serviceLocator(),
-//         homeRemoteDataSource: serviceLocator(),
-//       ),
-//     )
+// Repositories
+    ..registerFactory<HomeRepository>(
+      () => HomeRepositoryImpl(
+        homeRemoteDataSource: serviceLocator(),
+      ),
+    )
 
-// // Use cases
-//     ..registerFactory(
-//       () => FetchHomeBanners(
-//         homeRepository: serviceLocator(),
-//       ),
-//     )
-//     ..registerFactory(
-//       () => FetchFeaturedProducts(
-//         homeRepository: serviceLocator(),
-//       ),
-//     )
+// Use cases
+    ..registerFactory(
+      () => GetBanners(
+        homeRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => GetProducts(
+        homeRepository: serviceLocator(),
+      ),
+    )
 
-// // Blocs
-//     ..registerLazySingleton(
-//       () => BannerBloc(
-//         fetchHomeBanners: serviceLocator(),
-//       ),
-//     )
-//     ..registerLazySingleton(
-//       () => FeaturedProductsBloc(
-//         fetchFeaturedProducts: serviceLocator(),
-//       ),
-//     );
+// Blocs
+    ..registerLazySingleton(
+      () => BannerBloc(
+        getBanners: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => MenuBloc(
+        getProducts: serviceLocator(),
+      ),
+    );
 }
 
 // Data sources

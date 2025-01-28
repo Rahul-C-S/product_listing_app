@@ -6,7 +6,9 @@ class Urls {
   static const String login = "login-register/";
 
   // Home
-  static const String banner = 'home|banner';
+  static const String banners = 'banners/';
+  static const String products = 'products/';
+
 
   // Wishlist
 }

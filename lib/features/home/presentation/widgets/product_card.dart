@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:product_listing_app/features/home/domain/entities/product.dart';
 
 class ProductCard extends StatelessWidget {
-  final Map<String, dynamic> product;
+  final Product product;
 
   const ProductCard({super.key, required this.product});
 
@@ -9,81 +10,111 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.asset(
-                  product['image'],
-                  height: 160,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+          AspectRatio(
+            aspectRatio: 1,
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.circular(16),),
+                  child: Image.network(
+                    product.image,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              Positioned(
-                right: 8,
-                top: 8,
-                child: IconButton(
-                  icon: Icon(Icons.favorite_border),
-                  color: Colors.blue[600],
-                  onPressed: () {},
+                Positioned(
+                  right: 2,
+                  top: 2,
+                  child: product.inWishlist ? IconButton(
+                    icon: const Icon(Icons.favorite_rounded),
+                    color: const Color.fromRGBO(93, 91, 226, 1), 
+                    iconSize: 24,
+                    onPressed: () {},
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
+                  ) : IconButton(
+                    icon: const Icon(Icons.favorite_rounded),
+                    color:  Colors.white, 
+                    iconSize: 24,
+                    onPressed: () {},
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  product['name'],
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 4),
                 Row(
                   children: [
                     Text(
-                      '₹${product['price']}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue[600],
+                      '₹${product.price}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF5B5FDE),
                       ),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
-                      '₹${product['originalPrice']}',
-                      style: TextStyle(
-                        fontSize: 14,
+                      '₹${product.mrp}',
+                      style: const TextStyle(
+                        fontSize: 10,
                         decoration: TextDecoration.lineThrough,
-                        color: Colors.grey,
+                        color: Color(0xFF8E8E93),
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.star,
+                      color: Color(0xFFFFA726),
+                      size: 16,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${product.rating}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF1A1A1A),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 4),
-                Row(
-                  children: [
-                    Icon(Icons.star, color: Colors.orange, size: 18),
-                    SizedBox(width: 4),
-                    Text(
-                      '${product['rating']}',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                const SizedBox(height: 14,),
+                                Text(
+                  product.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF1A1A1A),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

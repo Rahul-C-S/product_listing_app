@@ -7,6 +7,13 @@ import 'package:product_listing_app/features/auth/domain/repositories/auth_repos
 import 'package:product_listing_app/features/auth/domain/use_cases/login_register.dart';
 import 'package:product_listing_app/features/auth/domain/use_cases/verify_user.dart';
 import 'package:product_listing_app/features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'package:product_listing_app/features/home/data/data_sources/home_remote_data_source.dart';
+import 'package:product_listing_app/features/home/data/repositories/home_repository_impl.dart';
+import 'package:product_listing_app/features/home/domain/repositories/home_repository.dart';
+import 'package:product_listing_app/features/home/domain/use_cases/get_banners.dart';
+import 'package:product_listing_app/features/home/domain/use_cases/get_products.dart';
+import 'package:product_listing_app/features/home/presentation/blocs/banner/banner_bloc.dart';
+import 'package:product_listing_app/features/home/presentation/blocs/menu/menu_bloc.dart';
 
 
 part 'dependencies_main.dart';
