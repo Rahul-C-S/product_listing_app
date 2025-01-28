@@ -4,6 +4,7 @@ class Urls {
   // Auth
   static const String verify = "verify/";
   static const String login = "login-register/";
+  static const String userData = "user-data/";
 
   // Home
   static const String banners = 'banners/';

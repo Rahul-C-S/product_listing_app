@@ -45,8 +45,18 @@ void _injectAuth() {
         authRepository: serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => GetUserData(
+        authRepository: serviceLocator(),
+      ),
+    )
 
 // Blocs
+    ..registerLazySingleton(
+      () => UserDataBloc(
+        getUserData: serviceLocator(),
+      ),
+    )
     ..registerLazySingleton(
       () => AuthBloc(
         loginRegister: serviceLocator(),

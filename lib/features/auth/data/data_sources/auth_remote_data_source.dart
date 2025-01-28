@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:product_listing_app/core/constants/urls.dart';
 import 'package:product_listing_app/core/errors/exceptions.dart';
 import 'package:product_listing_app/core/utils/web_service.dart';
+import 'package:product_listing_app/features/auth/data/models/user_data_model.dart';
 import 'package:product_listing_app/features/auth/data/models/verification_response_model.dart';
 
 abstract interface class AuthRemoteDataSource {
@@ -12,6 +13,7 @@ abstract interface class AuthRemoteDataSource {
     required String name,
     required String phone,
   });
+  Future<UserDataModel> getUserData();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -72,6 +74,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           phone: phone,
           user: response.data['user'] as bool,
         );
+      }
+
+      throw "Unexpected error!";
+    } catch (e, s) {
+      debugPrint(s.toString());
+      throw AppException(e.toString());
+    }
+  }
+
+  @override
+  Future<UserDataModel> getUserData() async {
+    try {
+      final response = await _webService.get(endpoint: Urls.userData);
+
+      if (response.data is Map) {
+        return UserDataModel.fromMap(response.data);
       }
 
       throw "Unexpected error!";

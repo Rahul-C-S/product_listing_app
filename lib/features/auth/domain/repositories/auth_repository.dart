@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:product_listing_app/core/errors/failures.dart';
+import 'package:product_listing_app/features/auth/domain/entities/user_data.dart';
 import 'package:product_listing_app/features/auth/domain/entities/verification_response.dart';
 
 abstract interface class AuthRepository {
@@ -10,4 +11,5 @@ abstract interface class AuthRepository {
     required String name,
     required String phone,
   });
+  Future<Either<Failure,UserData>> getUserData();
 }

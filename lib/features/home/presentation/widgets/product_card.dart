@@ -28,7 +28,10 @@ class ProductCard extends StatelessWidget {
             child: Stack(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.circular(16),),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                    bottom: Radius.circular(16),
+                  ),
                   child: Image.network(
                     product.image,
                     width: double.infinity,
@@ -39,27 +42,29 @@ class ProductCard extends StatelessWidget {
                 Positioned(
                   right: 2,
                   top: 2,
-                  child: product.inWishlist ? IconButton(
-                    icon: const Icon(Icons.favorite_rounded),
-                    color: const Color.fromRGBO(93, 91, 226, 1), 
-                    iconSize: 24,
-                    onPressed: () {},
-                    padding: const EdgeInsets.all(8),
-                    constraints: const BoxConstraints(
-                      minWidth: 36,
-                      minHeight: 36,
-                    ),
-                  ) : IconButton(
-                    icon: const Icon(Icons.favorite_rounded),
-                    color:  Colors.white, 
-                    iconSize: 24,
-                    onPressed: () {},
-                    padding: const EdgeInsets.all(8),
-                    constraints: const BoxConstraints(
-                      minWidth: 36,
-                      minHeight: 36,
-                    ),
-                  ),
+                  child: product.inWishlist
+                      ? IconButton(
+                          icon: const Icon(Icons.favorite_rounded),
+                          color: const Color.fromRGBO(93, 91, 226, 1),
+                          iconSize: 24,
+                          onPressed: () {},
+                          padding: const EdgeInsets.all(8),
+                          constraints: const BoxConstraints(
+                            minWidth: 36,
+                            minHeight: 36,
+                          ),
+                        )
+                      : IconButton(
+                          icon: const Icon(Icons.favorite_rounded),
+                          color: Colors.white,
+                          iconSize: 24,
+                          onPressed: () {},
+                          padding: const EdgeInsets.all(8),
+                          constraints: const BoxConstraints(
+                            minWidth: 36,
+                            minHeight: 36,
+                          ),
+                        ),
                 ),
               ],
             ),
@@ -72,20 +77,20 @@ class ProductCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '₹${product.price}',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF5B5FDE),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
                       '₹${product.mrp}',
                       style: const TextStyle(
                         fontSize: 10,
                         decoration: TextDecoration.lineThrough,
                         color: Color(0xFF8E8E93),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '₹${product.price}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF5B5FDE),
                       ),
                     ),
                     const Spacer(),
@@ -105,8 +110,10 @@ class ProductCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 14,),
-                                Text(
+                const SizedBox(
+                  height: 14,
+                ),
+                Text(
                   product.name,
                   style: const TextStyle(
                     fontSize: 16,
