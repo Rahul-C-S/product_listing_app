@@ -9,6 +9,8 @@ class Urls {
   // Home
   static const String banners = 'banners/';
   static const String products = 'products/';
+  static const String addRemoveWishlist = 'add-remove-wishlist/';
+  static const String wishlist = 'wishlist/';
 
 
   // Wishlist

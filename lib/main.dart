@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Product Listing App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
       home: const SplashScreen(),

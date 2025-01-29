@@ -55,13 +55,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     ProfileSection(
                       title: 'Name',
                       content: state.userData.name,
-                      icon: Icons.person_outline,
+
                     ),
                     const SizedBox(height: 16),
                     ProfileSection(
                       title: 'Phone',
                       content: state.userData.phone,
-                      icon: Icons.phone_outlined,
+
                     ),
                   ],
                 );

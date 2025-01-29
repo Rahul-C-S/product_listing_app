@@ -13,14 +13,14 @@ class BannerItem extends StatelessWidget {
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
       ),
-      // Add width and height constraints
-      width: double.infinity,  // or specific width like 200
-      height: 200,  // Adjust this value based on your needs
+      
+      width: double.infinity,  
+      height: 200,  
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Image.network(
           banner,
-          fit: BoxFit.cover,  // Changed from contain to cover
+          fit: BoxFit.cover,  
           width: double.infinity,
           height: double.infinity,
         ),

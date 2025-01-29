@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/core/utils/loader.dart';
 import 'package:product_listing_app/core/utils/show_snackbar.dart';
 import 'package:product_listing_app/features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'package:product_listing_app/features/auth/presentation/widgets/back_nav_button.dart';
 import 'package:product_listing_app/features/home/presentation/widgets/navigation_tabs.dart';
 
 class NameInputPage extends StatefulWidget {
@@ -45,7 +46,11 @@ class _NameInputPageState extends State<NameInputPage> {
             }
 
             if (state is AuthSuccess) {
-              showCustomSnackBar(context: context, message: 'Login Successful',type: SnackBarType.success,);
+              showCustomSnackBar(
+                context: context,
+                message: 'Login Successful',
+                type: SnackBarType.success,
+              );
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const NavigationTabs()),
@@ -57,45 +62,22 @@ class _NameInputPageState extends State<NameInputPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                const SizedBox(height: 32),
-                const Text(
-                  'Your Name',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Please enter your full name',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
+                BackBNavButton(),
                 const SizedBox(height: 24),
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your name',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    hintText: 'Enter full name',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                      ),
+                    ),
                   ),
                   textCapitalization: TextCapitalization.words,
                   autofocus: true,
@@ -104,8 +86,10 @@ class _NameInputPageState extends State<NameInputPage> {
                 ElevatedButton(
                   onPressed: () {
                     if (nameController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please enter your name')),
+                      showCustomSnackBar(
+                        context: context,
+                        message: 'Please enter your name',
+                        type: SnackBarType.error,
                       );
                       return;
                     }
@@ -120,7 +104,7 @@ class _NameInputPageState extends State<NameInputPage> {
                     ),
                   ),
                   child: const Text(
-                    'Continue',
+                    'Submit',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,

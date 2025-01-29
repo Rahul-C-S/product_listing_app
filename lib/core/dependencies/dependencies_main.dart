@@ -94,6 +94,16 @@ void _injectHome() {
         homeRepository: serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => GetWishlist(
+        homeRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AddRemoveWishlistItem(
+        homeRepository: serviceLocator(),
+      ),
+    )
 
 // Blocs
     ..registerLazySingleton(
@@ -104,6 +114,8 @@ void _injectHome() {
     ..registerLazySingleton(
       () => MenuBloc(
         getProducts: serviceLocator(),
+        addRemoveWishlistItem: serviceLocator(),
+        getWishlist: serviceLocator(),
       ),
     );
 }

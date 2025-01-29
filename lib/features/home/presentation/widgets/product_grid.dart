@@ -9,16 +9,38 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    int getCrossAxisCount(double width) {
+      if (width <= 600) {
+        return 2;
+      } else if (width <= 900) {
+        return 3;
+      } else {
+        return 4;
+      }
+    }
+
+    double getChildAspectRatio(double width) {
+      if (width <= 600) {
+        return 0.65;
+      } else {
+        return 0.7;
+      }
+    }
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth > 600 ? 16 : 12,
+      ),
       child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.65,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
+          crossAxisCount: getCrossAxisCount(screenWidth),
+          childAspectRatio: getChildAspectRatio(screenWidth),
+          crossAxisSpacing: screenWidth > 600 ? 12 : 8,
+          mainAxisSpacing: screenWidth > 600 ? 12 : 8,
         ),
         itemCount: products.length,
         itemBuilder: (context, index) => ProductCard(product: products[index]),

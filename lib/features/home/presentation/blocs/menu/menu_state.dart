@@ -17,4 +17,17 @@ final class MenuFailure extends MenuState {
 
 }
 
+final class WishlistFetchSuccess extends MenuState {
+  final List<Product> products;
+
+  WishlistFetchSuccess({required this.products});
+}
+
+
+final class WishListUpdateSuccess extends MenuState {
+  final String message;
+
+  WishListUpdateSuccess({required this.message});
+}
+
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/features/home/domain/entities/product.dart';
+import 'package:product_listing_app/features/home/presentation/blocs/menu/menu_bloc.dart';
+import 'package:product_listing_app/features/home/presentation/widgets/wishlist_button.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -42,29 +45,14 @@ class ProductCard extends StatelessWidget {
                 Positioned(
                   right: 2,
                   top: 2,
-                  child: product.inWishlist
-                      ? IconButton(
-                          icon: const Icon(Icons.favorite_rounded),
-                          color: const Color.fromRGBO(93, 91, 226, 1),
-                          iconSize: 24,
-                          onPressed: () {},
-                          padding: const EdgeInsets.all(8),
-                          constraints: const BoxConstraints(
-                            minWidth: 36,
-                            minHeight: 36,
-                          ),
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.favorite_rounded),
-                          color: Colors.white,
-                          iconSize: 24,
-                          onPressed: () {},
-                          padding: const EdgeInsets.all(8),
-                          constraints: const BoxConstraints(
-                            minWidth: 36,
-                            minHeight: 36,
-                          ),
-                        ),
+                  child: WishlistButton(
+                    inWishlist: product.inWishlist,
+                    onPressed: () => BlocProvider.of<MenuBloc>(context).add(
+                      UpdateWishlist(
+                        productId: product.id,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -110,9 +98,7 @@ class ProductCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 14,
-                ),
+                const SizedBox(height: 14),
                 Text(
                   product.name,
                   style: const TextStyle(

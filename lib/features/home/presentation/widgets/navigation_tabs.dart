@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:product_listing_app/features/auth/presentation/pages/profile_page.dart';
 import 'package:product_listing_app/features/home/presentation/pages/home_page.dart';
-import 'package:product_listing_app/features/wish_list/presentation/pages/wish_list_page.dart';
+import 'package:product_listing_app/features/home/presentation/pages/wish_list_page.dart';
 
 class NavigationTabs extends StatefulWidget {
   const NavigationTabs({super.key});
@@ -16,39 +16,52 @@ class _NavigationTabsState extends State<NavigationTabs> {
   final List<Widget> _pages = [
     const HomePage(),
     const WishListPage(),
-    const ProfilePage(), // Profile page placeholder
+    const ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
-      ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(bottom: 20,left: 30,right: 30,),
-        padding: EdgeInsets.symmetric(vertical: 8,),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: _selectedIndex,
+            children: _pages,
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: Center(
+              child: Material(
+                elevation: 6,
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.transparent,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      width: MediaQuery.of(context).size.width * .8,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildNavItem(0, Icons.home_outlined, 'Home'),
+                      const SizedBox(width: 16),
+                      _buildNavItem(
+                          1, Icons.favorite_outline_outlined, 'Wishlist'),
+                      const SizedBox(width: 16),
+                      _buildNavItem(2, Icons.person_outline, 'Profile'),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ],
-          borderRadius: BorderRadius.circular(50)
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildNavItem(0, Icons.home_outlined, 'Home'),
-            _buildNavItem(1, Icons.favorite_outline_outlined, 'Wishlist'),
-            _buildNavItem(2, Icons.person_outline, 'Profile'),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

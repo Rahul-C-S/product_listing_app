@@ -20,11 +20,34 @@ class HomeRepositoryImpl implements HomeRepository {
       return left(Failure(e.message));
     }
   }
-  
+
   @override
-  Future<Either<Failure, List<String>>> getBanners() async{
-  try {
+  Future<Either<Failure, List<String>>> getBanners() async {
+    try {
       final res = await _homeRemoteDataSource.getBanners();
+      return right(res);
+    } on AppException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> addRemoveWishlistItem(
+      {required int productId}) async {
+    try {
+      final res = await _homeRemoteDataSource.addRemoveWishlistItem(
+        productId: productId,
+      );
+      return right(res);
+    } on AppException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductModel>>> getWishList() async {
+    try {
+      final res = await _homeRemoteDataSource.getWishList();
       return right(res);
     } on AppException catch (e) {
       return left(Failure(e.message));

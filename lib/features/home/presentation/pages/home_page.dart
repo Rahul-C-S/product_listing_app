@@ -23,8 +23,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<MenuBloc>(context).add(FetchMenu());
     BlocProvider.of<BannerBloc>(context).add(FetchBanners());
+    _loadMenu();
+  }
+
+  void _loadMenu() {
+    BlocProvider.of<MenuBloc>(context).add(FetchMenu());
   }
 
   @override
@@ -40,13 +44,21 @@ class _HomePageState extends State<HomePage> {
                 } else {
                   Loader.hide();
                 }
-      
+
                 if (state is ProductSuccess) {
                   setState(() {
                     _products = state.products;
                   });
                 }
-      
+
+                if (state is WishListUpdateSuccess) {
+                  showCustomSnackBar(
+                      context: context,
+                      message: state.message,
+                      type: SnackBarType.success);
+                  _loadMenu();
+                }
+
                 if (state is MenuFailure) {
                   showCustomSnackBar(
                     context: context,
@@ -56,20 +68,26 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             ),
-            BlocListener<BannerBloc, BannerState>(listener: (context, state) {
-              if(state is BannerLoading){
-                Loader.show(context);
-              }else{
-                Loader.hide();
-              }
-      
-              if(state is BannerSuccess){
-                _banners = state.banners;
-              }
-              if(state is BannerFailure){
-                showCustomSnackBar(context: context, message: state.error, type: SnackBarType.error,);
-              }
-            },),
+            BlocListener<BannerBloc, BannerState>(
+              listener: (context, state) {
+                if (state is BannerLoading) {
+                  Loader.show(context);
+                } else {
+                  Loader.hide();
+                }
+
+                if (state is BannerSuccess) {
+                  _banners = state.banners;
+                }
+                if (state is BannerFailure) {
+                  showCustomSnackBar(
+                    context: context,
+                    message: state.error,
+                    type: SnackBarType.error,
+                  );
+                }
+              },
+            ),
           ],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
