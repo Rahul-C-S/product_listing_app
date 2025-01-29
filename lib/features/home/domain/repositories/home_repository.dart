@@ -9,4 +9,5 @@ abstract interface class HomeRepository {
   Future<Either<Failure,String>> addRemoveWishlistItem({
     required int productId,
   });
+  Future<Either<Failure,List<Product>>> search({required String query,});
 }

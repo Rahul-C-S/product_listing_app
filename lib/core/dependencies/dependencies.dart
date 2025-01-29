@@ -16,6 +16,7 @@ import 'package:product_listing_app/features/home/domain/use_cases/add_remove_wi
 import 'package:product_listing_app/features/home/domain/use_cases/get_banners.dart';
 import 'package:product_listing_app/features/home/domain/use_cases/get_products.dart';
 import 'package:product_listing_app/features/home/domain/use_cases/get_wishlist.dart';
+import 'package:product_listing_app/features/home/domain/use_cases/search_product.dart';
 import 'package:product_listing_app/features/home/presentation/blocs/banner/banner_bloc.dart';
 import 'package:product_listing_app/features/home/presentation/blocs/menu/menu_bloc.dart';
 

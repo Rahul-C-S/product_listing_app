@@ -12,3 +12,9 @@ final class UpdateWishlist extends MenuEvent {
 }
 
 final class FetchWishlist extends MenuEvent {}
+
+final class Search extends MenuEvent {
+  final String query;
+
+  Search({required this.query});
+}

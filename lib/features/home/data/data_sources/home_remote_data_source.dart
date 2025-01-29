@@ -11,6 +11,9 @@ abstract interface class HomeRemoteDataSource {
   Future<String> addRemoveWishlistItem({
     required int productId,
   });
+  Future<List<ProductModel>> search({
+    required String query,
+  });
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -63,7 +66,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<String> addRemoveWishlistItem({required int productId}) async {
     try {
-      final response = await _webService.post(endpoint: Urls.addRemoveWishlist, body: {
+      final response =
+          await _webService.post(endpoint: Urls.addRemoveWishlist, body: {
         'product_id': productId.toString(),
       });
       if (response.data is Map) {
@@ -89,6 +93,34 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
               (e) => ProductModel.fromMap(e),
             )
             .toList();
+      }
+
+      throw "Unexpected error!";
+    } catch (e, s) {
+      debugPrint(s.toString());
+      throw AppException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<ProductModel>> search({required String query}) async {
+    try {
+      final response =
+          await _webService.post(endpoint: Urls.search, body: {'query': query});
+      if (response.data is List) {
+        return (response.data as List)
+            .map(
+              (e) => ProductModel.fromMap(e),
+            )
+            .toList();
+      }
+
+      if (response.data == null) {
+        throw 'No products found!';
+      }
+
+      if (response.data is Map && response.data['message'] != null) {
+        throw response.data['message'] as String;
       }
 
       throw "Unexpected error!";

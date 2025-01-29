@@ -11,7 +11,7 @@ class Urls {
   static const String products = 'products/';
   static const String addRemoveWishlist = 'add-remove-wishlist/';
   static const String wishlist = 'wishlist/';
+  static const String search = 'search/';
 
 
-  // Wishlist
 }

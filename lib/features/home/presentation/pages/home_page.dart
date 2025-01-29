@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
   @override
   void dispose() {
     widget.tabController.removeListener(_handleTabSelection);
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CustomSearchBar(),
+               CustomSearchBar(),
               BannerSlider(banners: _banners),
               const Padding(
                 padding: EdgeInsets.all(8.0),

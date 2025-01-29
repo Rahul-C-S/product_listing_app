@@ -53,4 +53,14 @@ class HomeRepositoryImpl implements HomeRepository {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ProductModel>>> search({required String query,}) async{
+       try {
+      final res = await _homeRemoteDataSource.search(query: query,);
+      return right(res);
+    } on AppException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

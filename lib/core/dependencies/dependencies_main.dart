@@ -104,7 +104,11 @@ void _injectHome() {
         homeRepository: serviceLocator(),
       ),
     )
-
+    ..registerFactory(
+      () => SearchProduct(
+        homeRepository: serviceLocator(),
+      ),
+    )
 // Blocs
     ..registerLazySingleton(
       () => BannerBloc(
@@ -116,6 +120,7 @@ void _injectHome() {
         getProducts: serviceLocator(),
         addRemoveWishlistItem: serviceLocator(),
         getWishlist: serviceLocator(),
+        search: serviceLocator(),
       ),
     );
 }

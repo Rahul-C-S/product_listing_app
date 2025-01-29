@@ -9,7 +9,7 @@ import 'package:product_listing_app/features/home/presentation/widgets/product_g
 class WishListPage extends StatefulWidget {
   final TabController tabController;
   final int index;
-  
+
   const WishListPage({
     super.key,
     required this.tabController,
@@ -46,8 +46,33 @@ class _WishListPageState extends State<WishListPage> {
     super.dispose();
   }
 
+  
+  EdgeInsets _getResponsivePadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width > 1200) {
+      return const EdgeInsets.symmetric(horizontal: 64, vertical: 16);
+    } else if (width > 600) {
+      return const EdgeInsets.symmetric(horizontal: 32, vertical: 12);
+    }
+    return const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+  }
+
+  
+  double _getResponsiveFontSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width > 1200) {
+      return 28;
+    } else if (width > 600) {
+      return 24;
+    }
+    return 20;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final responsivePadding = _getResponsivePadding(context);
+    final responsiveFontSize = _getResponsiveFontSize(context);
+
     return BlocListener<MenuBloc, MenuState>(
       listener: (context, state) {
         if (state is MenuFailure) {
@@ -75,29 +100,42 @@ class _WishListPageState extends State<WishListPage> {
         }
       },
       child: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Wishlist',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: responsivePadding,
+                  child: Text(
+                    'Wishlist',
+                    style: TextStyle(
+                      fontSize: responsiveFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            if (products.isEmpty)
-              const Expanded(
-                child: Center(
-                  child: Text('Your wishlist is empty'),
-                ),
-              )
-            else
-              Expanded(
-                child: ProductGrid(products: products),
-              ),
-          ],
+                if (products.isEmpty)
+                  const Expanded(
+                    child: Center(
+                      child: Text(
+                        'Your wishlist is empty',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  )
+                else
+                  Expanded(
+                    child: Padding(
+                      padding: responsivePadding.copyWith(top: 0),
+                      child: ProductGrid(
+                        products: products,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );
