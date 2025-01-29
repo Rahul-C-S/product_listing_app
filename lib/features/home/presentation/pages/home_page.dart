@@ -133,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               ProductGrid(products: _products),
+              const SizedBox(height: 80,),
             ],
           ),
         ),
