@@ -26,9 +26,30 @@ class _NameInputPageState extends State<NameInputPage> {
     super.dispose();
   }
 
+  EdgeInsets getResponsivePadding() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth <= 600) {
+      return const EdgeInsets.all(24.0);
+    } else if (screenWidth <= 900) {
+      return const EdgeInsets.symmetric(horizontal: 100.0, vertical: 32.0);
+    } else {
+      return EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.3,
+        vertical: 40.0,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const BackBNavButton(),
+        ),
+        backgroundColor: Colors.white,
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: BlocListener<AuthBloc, AuthState>(
@@ -51,19 +72,18 @@ class _NameInputPageState extends State<NameInputPage> {
                 message: 'Login Successful',
                 type: SnackBarType.success,
               );
-              Navigator.pushReplacement(
+              Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const NavigationTabs()),
+                (route) => false,
               );
             }
           },
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: getResponsivePadding(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BackBNavButton(),
-                const SizedBox(height: 24),
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(

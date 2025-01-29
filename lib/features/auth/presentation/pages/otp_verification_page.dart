@@ -31,7 +31,6 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   Timer? _timer;
   int _timeLeft = 120;
 
-  
   double getResponsiveFontSize(double baseSize) {
     final screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth <= 600) return baseSize;
@@ -123,9 +122,10 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
         type: SnackBarType.success,
       );
 
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const NavigationTabs()),
+        (route) => false,
       );
     } else {
       Navigator.of(context).push(MaterialPageRoute(
@@ -137,14 +137,15 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(leading: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: const BackBNavButton(),
-      ),
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const BackBNavButton(),
+        ),
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -153,7 +154,6 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Text(
                   'OTP VERIFICATION',
                   style: TextStyle(

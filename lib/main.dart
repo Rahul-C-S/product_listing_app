@@ -18,7 +18,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // Initialize dependencies and database
+  // Initialize dependencies
   await injectDependencies();
   runApp(
     MultiBlocProvider(

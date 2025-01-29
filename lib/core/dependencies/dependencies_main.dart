@@ -124,11 +124,3 @@ void _injectHome() {
       ),
     );
 }
-
-// Data sources
-
-// Repositories
-
-// Use cases
-
-// Blocs

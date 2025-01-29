@@ -128,8 +128,10 @@ class _WishListPageState extends State<WishListPage> {
                   Expanded(
                     child: Padding(
                       padding: responsivePadding.copyWith(top: 0),
-                      child: ProductGrid(
-                        products: products,
+                      child: SingleChildScrollView(
+                        child: ProductGrid(
+                          products: products,
+                        ),
                       ),
                     ),
                   ),

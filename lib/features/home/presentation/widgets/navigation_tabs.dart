@@ -59,6 +59,21 @@ class _NavigationTabsState extends State<NavigationTabs>
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isTablet = screenSize.width > 600;
+
+    final navBarWidth =
+        isTablet ? screenSize.width * 0.6 : screenSize.width * 0.85;
+
+    final horizontalPadding = isTablet ? 20.0 : 12.0;
+    final verticalPadding = isTablet ? 12.0 : 8.0;
+    final iconSize = isTablet ? 28.0 : 24.0;
+    final fontSize = isTablet ? 18.0 : 16.0;
+    final itemSpacing = isTablet ? 24.0 : 16.0;
+    final selectedItemPadding = isTablet
+        ? const EdgeInsets.symmetric(horizontal: 32, vertical: 16)
+        : const EdgeInsets.symmetric(horizontal: 24, vertical: 12);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -69,16 +84,18 @@ class _NavigationTabsState extends State<NavigationTabs>
           Positioned(
             left: 0,
             right: 0,
-            bottom: 20,
+            bottom: isTablet ? 30 : 20,
             child: Center(
               child: Material(
                 elevation: 6,
                 borderRadius: BorderRadius.circular(50),
                 color: Colors.transparent,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  width: MediaQuery.of(context).size.width * .8,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                    vertical: verticalPadding,
+                  ),
+                  width: navBarWidth,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50),
@@ -87,12 +104,14 @@ class _NavigationTabsState extends State<NavigationTabs>
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildNavItem(0, Icons.home_outlined, 'Home'),
-                      const SizedBox(width: 16),
-                      _buildNavItem(
-                          1, Icons.favorite_outline_outlined, 'Wishlist'),
-                      const SizedBox(width: 16),
-                      _buildNavItem(2, Icons.person_outline, 'Profile'),
+                      _buildNavItem(0, Icons.home_outlined, 'Home', iconSize,
+                          fontSize, selectedItemPadding),
+                      SizedBox(width: itemSpacing),
+                      _buildNavItem(1, Icons.favorite_outline_outlined,
+                          'Wishlist', iconSize, fontSize, selectedItemPadding),
+                      SizedBox(width: itemSpacing),
+                      _buildNavItem(2, Icons.person_outline, 'Profile',
+                          iconSize, fontSize, selectedItemPadding),
                     ],
                   ),
                 ),
@@ -104,14 +123,21 @@ class _NavigationTabsState extends State<NavigationTabs>
     );
   }
 
-  Widget _buildNavItem(int index, IconData icon, String label) {
+  Widget _buildNavItem(
+    int index,
+    IconData icon,
+    String label,
+    double iconSize,
+    double fontSize,
+    EdgeInsets selectedPadding,
+  ) {
     final isSelected = _selectedIndex == index;
 
     return GestureDetector(
       onTap: () => _onItemTapped(index),
       child: isSelected
           ? Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: selectedPadding,
               decoration: BoxDecoration(
                 color: const Color(0xFF5C4FE1),
                 borderRadius: BorderRadius.circular(50),
@@ -122,14 +148,14 @@ class _NavigationTabsState extends State<NavigationTabs>
                   Icon(
                     icon,
                     color: Colors.white,
-                    size: 24,
+                    size: iconSize,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     label,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: fontSize,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -139,7 +165,7 @@ class _NavigationTabsState extends State<NavigationTabs>
           : Icon(
               icon,
               color: Colors.grey,
-              size: 24,
+              size: iconSize,
             ),
     );
   }
