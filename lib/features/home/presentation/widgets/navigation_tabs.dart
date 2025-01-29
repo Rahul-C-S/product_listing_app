@@ -10,14 +10,52 @@ class NavigationTabs extends StatefulWidget {
   State<NavigationTabs> createState() => _NavigationTabsState();
 }
 
-class _NavigationTabsState extends State<NavigationTabs> {
+class _NavigationTabsState extends State<NavigationTabs>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const WishListPage(),
-    const ProfilePage(),
-  ];
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabSelection);
+
+    _pages = [
+      HomePage(
+        index: 0,
+        tabController: _tabController,
+      ),
+      WishListPage(
+        tabController: _tabController,
+        index: 1,
+      ),
+      const ProfilePage(),
+    ];
+  }
+
+  void _handleTabSelection() {
+    if (!mounted) return;
+    setState(() {
+      _selectedIndex = _tabController.index;
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_handleTabSelection);
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      _tabController.animateTo(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +78,7 @@ class _NavigationTabsState extends State<NavigationTabs> {
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      width: MediaQuery.of(context).size.width * .8,
+                  width: MediaQuery.of(context).size.width * .8,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50),
@@ -70,7 +108,7 @@ class _NavigationTabsState extends State<NavigationTabs> {
     final isSelected = _selectedIndex == index;
 
     return GestureDetector(
-      onTap: () => setState(() => _selectedIndex = index),
+      onTap: () => _onItemTapped(index),
       child: isSelected
           ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

@@ -10,7 +10,14 @@ import 'package:product_listing_app/features/home/presentation/widgets/custom_se
 import 'package:product_listing_app/features/home/presentation/widgets/product_grid.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final TabController tabController;
+  final int index;
+
+  const HomePage({
+    super.key,
+    required this.tabController,
+    required this.index,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,8 +30,25 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    widget.tabController.addListener(_handleTabSelection);
+    _loadInitialData();
+  }
+
+  void _loadInitialData() {
     BlocProvider.of<BannerBloc>(context).add(FetchBanners());
     _loadMenu();
+  }
+
+  void _handleTabSelection() {
+    if (widget.tabController.index == widget.index) {
+      _loadInitialData();
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.tabController.removeListener(_handleTabSelection);
+    super.dispose();
   }
 
   void _loadMenu() {
@@ -77,8 +101,11 @@ class _HomePageState extends State<HomePage> {
                 }
 
                 if (state is BannerSuccess) {
-                  _banners = state.banners;
+                  setState(() {
+                    _banners = state.banners;
+                  });
                 }
+
                 if (state is BannerFailure) {
                   showCustomSnackBar(
                     context: context,
@@ -92,10 +119,10 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomSearchBar(),
+              const CustomSearchBar(),
               BannerSlider(banners: _banners),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   'Products',
                   style: TextStyle(
