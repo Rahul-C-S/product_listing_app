@@ -7,7 +7,6 @@ Future<void> injectDependencies() async {
     () => WebService(),
   );
 
-  // _injectOnBoarding();
   _injectHome();
   _injectCore();
   _injectAuth();
